@@ -141,7 +141,9 @@ public class Step01VariableTest extends PlainTestCase {
         String sea = "harbor";
         int land = 415;
         helpMethodArgumentImmutableMethodcall(sea, land);
-        log(sea); // your answer? => 
+        log(sea); // your answer? => harbor         //NEED MORE CLARITY
+        // Yayy :) Primitives change, but String.concat is an operation that points to a different place
+        // Strings are immutable and have to be passed as reference to work?
     }
 
     private void helpMethodArgumentImmutableMethodcall(String sea, int land) {
@@ -158,7 +160,8 @@ public class Step01VariableTest extends PlainTestCase {
         StringBuilder sea = new StringBuilder("harbor");
         int land = 415;
         helpMethodArgumentMethodcall(sea, land);
-        log(sea); // your answer? => 
+        log(sea); // your answer? => harbor416
+        // Yayy :D StringBuilder.append works on the same argument. Mutable.
     }
 
     private void helpMethodArgumentMethodcall(StringBuilder sea, int land) {
@@ -174,7 +177,8 @@ public class Step01VariableTest extends PlainTestCase {
         StringBuilder sea = new StringBuilder("harbor");
         int land = 415;
         helpMethodArgumentVariable(sea, land);
-        log(sea); // your answer? => 
+        log(sea); // your answer? => harbor416  x  harbor
+        //The sea in the helper function points to a different StringBuilder object
     }
 
     private void helpMethodArgumentVariable(StringBuilder sea, int land) {
@@ -202,11 +206,16 @@ public class Step01VariableTest extends PlainTestCase {
      * o すべての変数をlog()でカンマ区切りの文字列で表示
      * </pre>
      */
+    private int priari;
+
     public void test_variable_writing() {
         // define variables here
+        String sea = "mystic";
+        Integer land = null;
+        log(sea+','+land+','+priari);
     }
 
-    // ===================================================================================
+    // ==================================================================================
     //                                                                           Good Luck
     //                                                                           =========
     /**
@@ -215,11 +224,20 @@ public class Step01VariableTest extends PlainTestCase {
      * <pre>
      * _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
      * your question here (ここにあなたの質問を):
-     * 
+     * What is the output?
+     * Answer: harbordocks
      * _/_/_/_/_/_/_/_/_/_/
      * </pre>
      */
     public void test_variable_yourExercise() {
         // write your code here
+        String sea = "harbor";
+        StringBuilder ocean = new StringBuilder("docks");
+        ocean = help_variable_yourExercise(sea, ocean);
+        log(ocean);  // your answer? ==> harbordocks
+    }
+    private StringBuilder help_variable_yourExercise(String sea, StringBuilder ocean) {
+        ocean = new StringBuilder(sea).append(ocean);
+        return(ocean);
     }
 }
