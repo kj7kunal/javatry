@@ -22,7 +22,7 @@ import org.docksidestage.unit.PlainTestCase;
  * Operate exercise as javadoc. If it's question style, write your answer before test execution. <br>
  * (javadocの通りにエクササイズを実施。質問形式の場合はテストを実行する前に考えて答えを書いてみましょう)
  * @author jflute
- * @author your_name_here
+ * @author kunal.jain
  */
 public class Step04MethodTest extends PlainTestCase {
 
@@ -35,7 +35,7 @@ public class Step04MethodTest extends PlainTestCase {
      */
     public void test_method_call_basic() {
         String sea = supplySomething();
-        log(sea); // your answer? =>
+        log(sea); // your answer? => in supply: over || over
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -43,7 +43,7 @@ public class Step04MethodTest extends PlainTestCase {
         String sea = functionSomething("mystic");
         consumeSomething(supplySomething());
         runnableSomething();
-        log(sea); // your answer? => 
+        log(sea); // your answer? => in function: mysmys || in supply: over || in consume: mystic || in runnable: outofshadow || mysmys
     }
 
     private String functionSomething(String name) {
@@ -76,7 +76,7 @@ public class Step04MethodTest extends PlainTestCase {
         if (!land) {
             sea = sea + mutable.getStageName().length();
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 910
     }
 
     private int helloMutable(int sea, Boolean land, St4MutableStage piari) {
@@ -102,8 +102,8 @@ public class Step04MethodTest extends PlainTestCase {
     // ===================================================================================
     //                                                                   Instance Variable
     //                                                                   =================
-    private int inParkCount;
-    private boolean hasAnnualPassport;
+    private int inParkCount;    //initial value 0
+    private boolean hasAnnualPassport;  //initial value false
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_method_instanceVariable() {
@@ -115,13 +115,13 @@ public class Step04MethodTest extends PlainTestCase {
         }
         ++sea;
         sea = inParkCount;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 100
     }
 
     private void offAnnualPassport(boolean hasAnnualPassport) {
         hasAnnualPassport = false;
     }
-
+        // local hasAnnualPassport scope
     private void goToPark() {
         if (hasAnnualPassport) {
             ++inParkCount;
@@ -132,6 +132,7 @@ public class Step04MethodTest extends PlainTestCase {
     //                                                                           Challenge
     //                                                                           =========
     // write instance variables here
+    private boolean availableLogging = true;
     /**
      * Make private methods as followings, and comment out caller program in test method:
      * <pre>
@@ -151,13 +152,29 @@ public class Step04MethodTest extends PlainTestCase {
      * </pre>
      */
     public void test_method_making() {
-        // comment out after making these methods
-        //String replaced = replaceCtoB(replaceAtoB("ABC"));
-        //String sea = addPrefix("broadway", replaced);
-        //if (isAvailableLogging()) {
-        //    showSea(sea);
-        //}
+//         comment out after making these methods
+        String replaced = replaceCtoB(replaceAtoB("ABC"));
+        String sea = addPrefix("broadway", replaced);
+        if (isAvailableLogging()) {
+            showSea(sea);
+        }
     }
+    private String replaceAtoB(String name) {
+        return name.replace("A", "B");
+    }
+    private String replaceCtoB(String name) {
+        return name.replace("C", "B");
+    }
+    private String addPrefix(String prefix, String suffix) {
+        return prefix+':'+suffix;
+    }
+    private boolean isAvailableLogging(){
+        return availableLogging;
+    }
+    private void showSea(String sea){
+        log(sea);
+    }
+
 
     // write methods here
 }
