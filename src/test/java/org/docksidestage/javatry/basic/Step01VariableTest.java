@@ -47,7 +47,9 @@ public class Step01VariableTest extends PlainTestCase {
         String piari = null;
         String dstore = "mai";
         sea = sea + land + piari + ":" + dstore;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => mystic8:mai   x   mystic8null:mai
+        // null is not a '' string like python
+        // null is taken as null in java
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -56,7 +58,9 @@ public class Step01VariableTest extends PlainTestCase {
         String land = "oneman";
         sea = land;
         land = land + "'s dreams";
-        log(sea); // your answer? => 
+        log(sea); // your answer? => oneman's dreams  x  oneman
+        // Thought I was smart in assuming java stores variables as pointers
+        // IT DOES NOT!!!!! Watashi noob desu.
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -65,7 +69,8 @@ public class Step01VariableTest extends PlainTestCase {
         int land = 415;
         sea = land;
         land++;
-        log(sea); // your answer? => 
+        log(sea); // your answer? => 415
+        // Yayy! Can't fool myself twice B)
     }
 
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
@@ -73,9 +78,11 @@ public class Step01VariableTest extends PlainTestCase {
         BigDecimal sea = new BigDecimal(94);
         BigDecimal land = new BigDecimal(415);
         sea = land;
-        sea = land.add(new BigDecimal(1));
-        sea.add(new BigDecimal(1));
-        log(sea); // your answer? => 
+        sea = land.add(new BigDecimal(1));// WORKS
+        sea.add(new BigDecimal(1));       // DOESN'T WORK
+        log(sea); // your answer? => 417       x       416
+        // BigDecimal class is immutable. Changes values during constructor invocation only.
+        // Operations return a new BigDecimal object
     }
 
     // ===================================================================================
