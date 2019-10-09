@@ -45,13 +45,14 @@ public class TicketBooth {
     // ===================================================================================
     //                                                                          Buy Ticket
     //                                                                          ==========
-    public Ticket buyOneDayPassport(int handedMoney) {
+    public TicketBuyResult buyOneDayPassport(int handedMoney) {
         if (quantity <= 0) {
             throw new TicketSoldOutException("Sold out");
         }
         if (handedMoney < ONE_DAY_PRICE) {
             throw new TicketShortMoneyException("Short money: " + handedMoney);
         }
+        int change = handedMoney - ONE_DAY_PRICE;
         handedMoney = ONE_DAY_PRICE;
         Ticket newT = new Ticket(handedMoney,true);
         --quantity;
@@ -61,7 +62,8 @@ public class TicketBooth {
         } else {
             salesProceeds = handedMoney ;
         }
-        return newT;
+        TicketBuyResult tres = new TicketBuyResult(newT, change);
+        return tres;
     }
 
     public TicketBuyResult buyTwoDayPassport(int handedMoney) {
