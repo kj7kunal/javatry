@@ -144,6 +144,7 @@ public class Step01VariableTest extends PlainTestCase {
         log(sea); // your answer? => harbor         //NEED MORE CLARITY
         // Yayy :) Primitives change, but String.concat is an operation that points to a different place
         // Strings are immutable and have to be passed as reference to work?
+        // TODO [comment] exactly, you can't change the original sea just by concat, because it's immutable by zaya 2019/10/09
     }
 
     private void helpMethodArgumentImmutableMethodcall(String sea, int land) {
@@ -206,6 +207,7 @@ public class Step01VariableTest extends PlainTestCase {
      * o すべての変数をlog()でカンマ区切りの文字列で表示
      * </pre>
      */
+    // TODO fix typo, typo is a killer in a big project, be careful ;D　by zaya 2019/10/09
     private int priari;
 
     public void test_variable_writing() {
@@ -236,6 +238,7 @@ public class Step01VariableTest extends PlainTestCase {
         ocean = help_variable_yourExercise(sea, ocean);
         log(ocean);  // your answer? ==> harbordocks
     }
+    // TODO fix private methods are not in snake_case, to make it look private when called　by zaya 2019/10/09
     private StringBuilder help_variable_yourExercise(String sea, StringBuilder ocean) {
         ocean = new StringBuilder(sea).append(ocean);
         return(ocean);

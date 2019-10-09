@@ -179,7 +179,8 @@ public class Step02IfForTest extends PlainTestCase {
      * (foreach文をforEach()メソッドへの置き換えてみましょう (修正前と修正後で実行結果が同じになるように))
      */
 
-
+    // TODO why use instance variable? by zaya 2019/10/09
+    // TODO [ask] is the name of the variables are easy to understand? by zaya 2019/10/09
     private String a;
     private boolean fl = true;
     public void test_iffor_refactor_foreach_to_forEach() {
@@ -203,6 +204,7 @@ public class Step02IfForTest extends PlainTestCase {
                 }
             }
         });
+        // TODO not necessary to log sea, log a is more simple in this case by zaya 2019/10/09
         sea = a;
         log(sea); // should be same as before-fix
     }
@@ -225,6 +227,8 @@ public class Step02IfForTest extends PlainTestCase {
             if (stage.contains("r")) {
                 log(stage.toUpperCase());
             }
+            // TODO space between "else" and "{",  by zaya 2019/10/09
+            // [tips] shortcut auto formatting your code in IJ, option + cmd + l
             else{
                 log(stage);
             }
