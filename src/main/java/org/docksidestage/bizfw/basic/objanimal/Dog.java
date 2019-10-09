@@ -15,11 +15,21 @@
  */
 package org.docksidestage.bizfw.basic.objanimal;
 
+import org.docksidestage.bizfw.basic.objanimal.loud.Barker;
+import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * The object for dog(犬).
  * @author jflute
  */
-public class Dog extends Animal {
+public class Dog extends Animal implements FastRunner,Barker {
+
+    // ===================================================================================
+    //                                                                          Definition
+    //                                                                          ==========
+    private static final Logger logger = LoggerFactory.getLogger(Cat.class);
 
     // ===================================================================================
     //                                                                         Constructor
@@ -27,6 +37,23 @@ public class Dog extends Animal {
     public Dog() {
     }
 
+    // ===================================================================================
+    //                                                                              Runner
+    //                                                                              ======
+    @Override
+    public void run() {
+        // dummy implementation
+        logger.debug("...Running now");
+    }
+    // ===================================================================================
+    //                                                                              Barker
+    //                                                                              ======
+//    @Override
+//    public void barkNtimes() {
+//        for (int i = 0; i < 3; i++) {
+//            logger.debug(getBarkWord());
+//        }
+//    }
     // ===================================================================================
     //                                                                               Bark
     //                                                                              ======
