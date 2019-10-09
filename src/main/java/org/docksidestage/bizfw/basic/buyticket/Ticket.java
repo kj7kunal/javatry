@@ -25,12 +25,14 @@ public class Ticket {
     //                                                                           =========
     private final int displayPrice;
     private boolean alreadyIn;
+    private boolean ticketType;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public Ticket(int displayPrice) {
+    public Ticket(int displayPrice, boolean isOneDay) {
         this.displayPrice = displayPrice;
+        this.ticketType = isOneDay;
     }
 
     // ===================================================================================
@@ -52,5 +54,9 @@ public class Ticket {
 
     public boolean isAlreadyIn() {
         return alreadyIn;
+    }
+
+    public boolean isOneDay(){
+        return ticketType;
     }
 }
