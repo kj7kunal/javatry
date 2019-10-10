@@ -373,10 +373,10 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      * (抽象クラス肥大化を抑制するためにも、Animalのbark()のプロセス(処理)をBarkingProcessクラスとして切り出しましょう)
      */
     public void test_objectOriented_writing_withDelegation() {
-        // your confirmation code here
-        Dog dog = new Dog();
-        log(dog.bark().getBarkWord());
-    }
+        // your confirmation code here  // CHECK KAMACHI CODE
+        Dog dog = new Dog();            // SHOULDNT BE DONE USING ABSTRACT CLASS
+        log(dog.bark().getBarkWord());  // PROTECTED METHODS NEED TO BE KEPT IN THE SAME PACKAGE IF NEED BE USED
+    }                                   // DECLARING BARKPROCESS IN PUBLIC SCOPE IS DANGEROUS BECAUSE ITS INTERNAL
 
     /**
      * Is Zombie correct as sub-class of Animal? Analyze it in thirty seconds. (thinking only) <br>

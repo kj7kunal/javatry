@@ -33,7 +33,7 @@ import org.docksidestage.unit.PlainTestCase;
  * Operate as javadoc. If it's question style, write your answer before test execution. <br>
  * (javadocの通りに実施。質問形式の場合はテストを実行する前に考えて答えを書いてみましょう)
  * @author jflute
- * @author your_name_here
+ * @author kunal.jain
  */
 public class Step08Java8FunctionTest extends PlainTestCase {
 
@@ -61,14 +61,12 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         });
 
         log("...Executing lambda block style callback");
-        helpCallbackConsumer(stage -> {
-            log(stage + ": " + title);
-        });
+        helpCallbackConsumer(stage -> {log(stage + ": " + title);});
 
         log("...Executing lambda expression style callback");
         helpCallbackConsumer(stage -> log(stage + ": " + title));
 
-        // your answer? => 
+        // your answer? => yes
 
         // cannot reassign because it is used at callback process
         //name = "wave";
@@ -80,11 +78,9 @@ public class Step08Java8FunctionTest extends PlainTestCase {
      */
     public void test_java8_lambda_callback_order() {
         log("harbor");
-        helpCallbackConsumer(stage -> {
-            log(stage);
-        });
+        helpCallbackConsumer(stage -> { log(stage);  });
         log("lost river");
-        // your answer? => 
+        // your answer? => harbor, broadway, dockside, hangar, lost river
     }
 
     private class St8BasicConsumer implements Consumer<String> {
@@ -113,10 +109,8 @@ public class Step08Java8FunctionTest extends PlainTestCase {
      */
     public void test_java8_lambda_callback_valueRoad() {
         String label = "number";
-        String sea = helpCallbackFunction(number -> {
-            return label + ": " + number;
-        });
-        log(sea); // your answer? => 
+        String sea = helpCallbackFunction(number -> { return label + ": " + number;});
+        log(sea); // your answer? => number: 7
     }
 
     private String helpCallbackFunction(Function<Integer, String> oneArgLambda) {
@@ -147,11 +141,19 @@ public class Step08Java8FunctionTest extends PlainTestCase {
             }
         });
 
+        helpCallbackSupplier(() -> {return "broadway";}); //sea lambda block
+
+
         helpCallbackSupplier(() -> { // land
             return "dockside";
         });
 
+        helpCallbackSupplier(() -> "dockside"); //land
+
+
         helpCallbackSupplier(() -> "hangar"); // piari
+
+        helpCallbackSupplier(() -> {return "hangar";}); //sea lambda block
     }
 
     private void helpCallbackSupplier(Supplier<String> oneArgLambda) {
