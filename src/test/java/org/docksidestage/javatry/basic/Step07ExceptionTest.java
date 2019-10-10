@@ -168,9 +168,12 @@ public class Step07ExceptionTest extends PlainTestCase {
             // _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
             // What happens? Write situation and cause here. (何が起きた？状況と原因をここに書いてみましょう)
             // - - - - - - - - - -
-            //
-            //
-            //
+            //  SupercarClient invokes orderSupercar with requirement "steering wheel is like sea"
+            //  SupercarDealer invokes makeSupercar with catalog key "piari"
+            //  SupercarManufacturer invokes findSteeringWheelSpecId which returns '3' as specId and invokes makeSteeringWheel with it
+            //  SupercarSteeringWheelManufacturer invokes createSupercarSteeringWheelComponentDB() which returns "\\(^_^)/" as specText
+            //     and also invokes makeSpecialScrew with it which throws a runtime exception
+            //  SpecialScrewCannotMakeBySpecException: The kawaii face is not useful to make screw: ScrewSpec:{\(^_^)/}
             // _/_/_/_/_/_/_/_/_/_/
         }
     }
@@ -208,7 +211,7 @@ public class Step07ExceptionTest extends PlainTestCase {
         try {
             helpThrowIllegalState();
         } catch (IllegalStateException e) {
-            throw new St7ConstructorChallengeException("Failed to do something.");
+            throw new St7ConstructorChallengeException("Failed to do something.", e);
         }
     }
 
