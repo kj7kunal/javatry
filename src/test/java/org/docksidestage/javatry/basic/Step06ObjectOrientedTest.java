@@ -20,6 +20,7 @@ import org.docksidestage.bizfw.basic.buyticket.TicketBooth;
 import org.docksidestage.bizfw.basic.buyticket.TicketBuyResult;
 import org.docksidestage.bizfw.basic.objanimal.*;
 import org.docksidestage.bizfw.basic.objanimal.loud.AlarmClock;
+import org.docksidestage.bizfw.basic.objanimal.loud.Barker;
 import org.docksidestage.bizfw.basic.objanimal.loud.Loudable;
 import org.docksidestage.bizfw.basic.objanimal.runner.FastRunner;
 import org.docksidestage.unit.PlainTestCase;
@@ -325,8 +326,8 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_polymorphism_makeInterface() {
         // your confirmation code here
-//        Animal dog = new Dog();
-//        dog.barkNtimes();
+        Barker dog = new Dog();
+        dog.barkNtimes(5);  //wan wan wan wan wan
     }
 
     // ===================================================================================

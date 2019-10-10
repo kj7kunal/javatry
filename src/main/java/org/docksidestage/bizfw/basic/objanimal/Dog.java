@@ -48,12 +48,12 @@ public class Dog extends Animal implements FastRunner,Barker {
     // ===================================================================================
     //                                                                              Barker
     //                                                                              ======
-//    @Override
-//    public void barkNtimes() {
-//        for (int i = 0; i < 3; i++) {
-//            logger.debug(getBarkWord());
-//        }
-//    }
+    @Override
+    public void barkNtimes(int n) {
+        for (int i = 0; i < n; i++) {
+            logger.debug(getBarkWord());
+        }
+    }
     // ===================================================================================
     //                                                                               Bark
     //                                                                              ======
