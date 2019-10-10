@@ -35,6 +35,7 @@ public class Step04MethodTest extends PlainTestCase {
      */
     public void test_method_call_basic() {
         String sea = supplySomething();
+        // TODO in answer it's enough to write the result of log(sea) by zaya 2019/10/10
         log(sea); // your answer? => in supply: over || over
     }
 
@@ -43,6 +44,7 @@ public class Step04MethodTest extends PlainTestCase {
         String sea = functionSomething("mystic");
         consumeSomething(supplySomething());
         runnableSomething();
+        // TODO same as TODO above by zaya 2019/10/10
         log(sea); // your answer? => in function: mysmys || in supply: over || in consume: mystic || in runnable: outofshadow || mysmys
     }
 
@@ -136,22 +138,23 @@ public class Step04MethodTest extends PlainTestCase {
     /**
      * Make private methods as followings, and comment out caller program in test method:
      * <pre>
-     * o replaceAtoB(): has one argument as String, returns argument replaced "A" with "B" as String 
-     * o replaceCtoB(): has one argument as String, returns argument replaced "C" with "B" as String 
-     * o addPrefix(): has two arguments as String, returns combined first argument with ":" with second argument 
-     * o isAvailableLogging(): no argument, returns private instance variable "availableLogging" initialized as true (also make it)  
+     * o replaceAtoB(): has one argument as String, returns argument replaced "A" with "B" as String
+     * o replaceCtoB(): has one argument as String, returns argument replaced "C" with "B" as String
+     * o addPrefix(): has two arguments as String, returns combined first argument with ":" with second argument
+     * o isAvailableLogging(): no argument, returns private instance variable "availableLogging" initialized as true (also make it)
      * o showSea(): has one argument as String argument, no return, show argument by log()
      * </pre>
      * (privateメソッドを以下のように定義して、テストメソッド内の呼び出しプログラムをコメントアウトしましょう):
      * <pre>
-     * o replaceAtoB(): 一つのString引数、引数を "A" を "B" に置き換えらたStringを戻す 
-     * o replaceCtoB(): 一つのString引数、引数を "C" を "B" に置き換えらたStringを戻す 
-     * o addPrefix(): 二つのString引数、第一引数と ":" と第二引数を連結したものを戻す 
-     * o isAvailableLogging(): 引数なし、privateのインスタンス変数 "availableLogging" (初期値:true) を戻す (それも作る)  
+     * o replaceAtoB(): 一つのString引数、引数を "A" を "B" に置き換えらたStringを戻す
+     * o replaceCtoB(): 一つのString引数、引数を "C" を "B" に置き換えらたStringを戻す
+     * o addPrefix(): 二つのString引数、第一引数と ":" と第二引数を連結したものを戻す
+     * o isAvailableLogging(): 引数なし、privateのインスタンス変数 "availableLogging" (初期値:true) を戻す (それも作る)
      * o showSea(): 一つのString引数、戻り値なし、引数をlog()で表示する
      * </pre>
      */
     public void test_method_making() {
+        // TODO ↓ fix comment indent by zaya 2019/10/10
 //         comment out after making these methods
         String replaced = replaceCtoB(replaceAtoB("ABC"));
         String sea = addPrefix("broadway", replaced);
@@ -175,6 +178,20 @@ public class Step04MethodTest extends PlainTestCase {
         log(sea);
     }
 
-
+    // TODO write methods here or clean the empty lines, create empty lines between the methods by zaya 2019/10/10
+    //  [recommend] you can use IntelliJ auto formatting
+    // an example:
+    //    private String replaceAtoB(String name) {
+    //        return name.replace("A", "B");
+    //    }
+    //
+    //    private String replaceCtoB(String name) {
+    //        return name.replace("C", "B");
+    //    }
+    //
+    //    private String addPrefix(String prefix, String suffix) {
+    //        return prefix + ':' + suffix;
+    //    }
+    // more readable this way ;D
     // write methods here
 }
