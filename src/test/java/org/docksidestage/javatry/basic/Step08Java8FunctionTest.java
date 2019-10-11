@@ -174,14 +174,14 @@ public class Step08Java8FunctionTest extends PlainTestCase {
             log(oldmember.getMemberId(), oldmember.getMemberName());
         }
         Optional<St8Member> optMember = new St8DbFacade().selectMember(1);
-        if (optMember.isPresent()) {
+        if (optMember.isPresent()) {            // null is returned if optMember not made
             St8Member member = optMember.get();
             log(member.getMemberId(), member.getMemberName());
         }
         optMember.ifPresent(member -> {
-            log(member.getMemberId(), member.getMemberName());
+            log(member.getMemberId(), member.getMemberName());      //send consumer the value
         });
-        // your answer? => 
+        // your answer? => yes
     }
 
     /**
@@ -197,7 +197,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         optMember.ifPresent(member -> {
             log(member.getMemberId(), member.getMemberName());
         });
-        // your answer? => 
+        // your answer? => yes (SAME AS ABOVE)
     }
 
     /**
@@ -223,15 +223,9 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         Optional<St8Member> optMemberFirst = facade.selectMember(1);
         String land = optMemberFirst.flatMap(mb -> mb.getWithdrawal()).flatMap(wdl -> wdl.getPrimaryReason()).orElse("*no reason");
 
-        String piari = optMemberFirst.flatMap(mb -> {
-            return mb.getWithdrawal();
-        }).map(wdl -> {
-            return wdl.oldgetPrimaryReason();
-        }).orElse("*no reason");
+        String piari = optMemberFirst.flatMap(mb -> {return mb.getWithdrawal();}).map(wdl -> {return wdl.oldgetPrimaryReason();}).orElse("*no reason");
 
-        String bonvo = facade.selectMember(2).flatMap(mb -> {
-            return mb.getWithdrawal();
-        }).map(wdl -> wdl.oldgetPrimaryReason()).orElse("*no reason");
+        String bonvo = facade.selectMember(2).flatMap(mb -> {return mb.getWithdrawal();}).map(wdl -> wdl.oldgetPrimaryReason()).orElse("*no reason");
 
         String dstore = facade.selectMember(3) //
                 .flatMap(mb -> mb.getWithdrawal()) //
@@ -240,12 +234,12 @@ public class Step08Java8FunctionTest extends PlainTestCase {
 
         Integer amba = facade.selectMember(2).flatMap(mb -> mb.getWithdrawal()).map(wdl -> wdl.getWithdrawalId()).orElse(-1);
 
-        log(sea); // your answer? => 
-        log(land); // your answer? => 
-        log(piari); // your answer? => 
-        log(bonvo); // your answer? => 
-        log(dstore); // your answer? => 
-        log(amba); // your answer? => 
+        log(sea); // your answer? => music
+        log(land); // your answer? => music
+        log(piari); // your answer? => music
+        log(bonvo); // your answer? => *no reason
+        log(dstore); // your answer? => *no reason
+        log(amba); // your answer? => 12
     }
 
     /**
@@ -264,7 +258,7 @@ public class Step08Java8FunctionTest extends PlainTestCase {
         } catch (IllegalStateException e) {
             sea = e.getMessage();
         }
-        log(sea); // your answer? => 
+        log(sea); // your answer? => wave
     }
 
     // ===================================================================================
