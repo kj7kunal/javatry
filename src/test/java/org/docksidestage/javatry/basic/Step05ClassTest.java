@@ -60,6 +60,7 @@ public class Step05ClassTest extends PlainTestCase {
     /** Same as the previous method question. (前のメソッドの質問と同じ) */
     public void test_class_howToUse_wrongQuantity() {
         Integer sea = doTest_class_ticket_wrongQuantity();
+        // TODO It fails to buy a passport, what happens to the quantity?
         log(sea); // your answer? => Failed to buy one-day passport: money=7399 || 9
     }
 
@@ -206,8 +207,10 @@ public class Step05ClassTest extends PlainTestCase {
      */
     public void test_class_moreFix_wonder() {
         // your confirmation code here
+        // TODO use camel case for variable name by zaya 2019/10/11
         PluralDayTicket fourdayticket = new PluralDayTicket(4,22400);
 
+        // TODO you can use for maybe?
         fourdayticket.doInPark();
         log(fourdayticket.getDays());
         fourdayticket.doInPark();
