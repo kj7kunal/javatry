@@ -209,6 +209,21 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * ("Water" で始まる文字列をしまっているカラーボックスの色は？)
      */
     public void test_startsWith_findFirstWord() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        boolean found = false;
+        for(ColorBox colorBox: colorBoxList) {
+            for(BoxSpace boxSpace: colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content instanceof String && content.toString().startsWith("Water")){
+                    found = true;
+                }
+            }
+            if(found) {
+                BoxColor boxColor = colorBox.getColor();
+                log(boxColor.getColorName() + ": starts with Water...");
+                found = false;
+            }
+        }
     }
 
     /**
@@ -216,6 +231,21 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * ("front" で終わる文字列をしまっているカラーボックスの色は？)
      */
     public void test_endsWith_findLastWord() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        boolean found = false;
+        for(ColorBox colorBox: colorBoxList) {
+            for(BoxSpace boxSpace: colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content instanceof String && content.toString().endsWith("front")){
+                    found = true;
+                }
+            }
+            if(found) {
+                BoxColor boxColor = colorBox.getColor();
+                log(boxColor.getColorName() + ": ends with front...");
+                found = false;
+            }
+        }
     }
 
     // ===================================================================================
