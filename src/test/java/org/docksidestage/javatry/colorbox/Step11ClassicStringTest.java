@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.bizfw.colorbox.color.BoxColor;
+import org.docksidestage.bizfw.colorbox.space.BoxSpace;
 import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
@@ -31,7 +32,7 @@ import org.docksidestage.unit.PlainTestCase;
  * o don't fix the YourPrivateRoom class and color-box classes
  * </pre>
  * @author jflute
- * @author your_name_here
+ * @author kunal.jain
  */
 public class Step11ClassicStringTest extends PlainTestCase {
 
@@ -53,20 +54,73 @@ public class Step11ClassicStringTest extends PlainTestCase {
         } else {
             log("*not found");
         }
-    }
+    } //==> 5 (green)
 
     /**
      * Which string has max length in color-boxes? <br>
      * (カラーボックスに入ってる文字列の中で、一番長い文字列は？)
      */
     public void test_length_findMax() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        int maxlen = 0;
+        String maxstring = null;
+        for(ColorBox colorBox: colorBoxList) {
+            for(BoxSpace boxSpace: colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content instanceof String){
+                    String str = (String) content;
+                    if (maxlen < str.length()){
+                        maxstring = str;
+                        maxlen = str.length();
+                    }
+                }
+            }
+        }
+        log(maxstring + " (" + maxlen +")");
     }
 
     /**
      * How many characters are difference between max and min length of string in color-boxes? <br>
      * (カラーボックスに入ってる文字列の中で、一番長いものと短いものの差は何文字？)
      */
+    // Did it only for color name.
+    //    public void test_length_findMaxMinDiff() {
+    //        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+    //
+    //        int maxdiff=0, minlen;
+    //        int colorLength  = colorBoxList.get(0).getColor().getColorName().length();
+    //        minlen = colorLength;
+    //
+    //        for(int i=1;i<colorBoxList.size();i++) {
+    //            colorLength  = colorBoxList.get(i).getColor().getColorName().length();
+    //            if (colorLength < minlen) {
+    //                minlen = colorLength;
+    //            }
+    //            if (maxdiff < colorLength-minlen) {
+    //                maxdiff = colorLength-minlen;
+    //            }
+    //        }
+    //        log(maxdiff);
+    //    }
     public void test_length_findMaxMinDiff() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        Integer maxlen = null;
+        Integer minlen = null;
+        for (ColorBox colorBox : colorBoxList) {
+            for (BoxSpace boxSpace : colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content instanceof String) {
+                    String str = (String) content;
+                    if (maxlen == null || maxlen < str.length()) {
+                        maxlen = str.length();
+                    }
+                    if (minlen == null || minlen > str.length()) {
+                        minlen = str.length();
+                    }
+                }
+            }
+        }
+        log(maxlen-minlen);
     }
 
     /**
@@ -74,6 +128,38 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる値 (文字列以外はtoString()) の中で、二番目に長い文字列は？ (ソートなしで))
      */
     public void test_length_findSecondMax() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        int maxlen = 0, max2len = 0;
+        String max2value = null, maxvalue = null;
+        String str = null;
+        for(ColorBox colorBox: colorBoxList) {
+            for(BoxSpace boxSpace: colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content==null){
+                    continue;
+                }
+
+                str = content.toString();
+
+                if (maxlen < str.length()){
+                    max2value = maxvalue;
+                    max2len = maxlen;
+                    maxvalue = str;
+                    maxlen = str.length();
+                }
+                else if (max2len<str.length() && str.length()!=maxlen){
+                    max2value = str;
+                    max2len = str.length();
+                }
+            }
+        }
+        if (max2len==0){
+            log("NO SECOND MAX");
+        }
+        else{
+            log("Max ("+maxlen+"): "+maxvalue);
+            log("Second Max ("+max2len+"): "+max2value);
+        }
     }
 
     /**
@@ -81,6 +167,19 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスに入ってる文字列の長さの合計は？)
      */
     public void test_length_calculateLengthSum() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        int sumlen = 0;
+        for(ColorBox colorBox: colorBoxList) {
+            for(BoxSpace boxSpace: colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content instanceof String){
+                    String str = (String) content;
+                    sumlen+=str.length();
+                }
+            }
+        }
+        log("Total sum of lengths: " + sumlen);
+
     }
 
     /**
@@ -88,6 +187,22 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中で、色の名前が一番長いものは？)
      */
     public void test_length_findMaxColorSize() {
+//        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+//        int maxlen = 0;
+//        String maxcolor = null;
+//        for(ColorBox colorBox: colorBoxList) {
+//            for(BoxSpace boxSpace: colorBox.getSpaceList()) {
+//                Object content = boxSpace.getContent();
+//                if (content instanceof String){
+//                    String str = (String) content;
+//                    if (maxlen < str.length()){
+//                        maxcolor = str;
+//                        maxlen = str.length();
+//                    }
+//                }
+//            }
+//        }
+//        log(maxcolor + " (" + maxlen +")");
     }
 
     // ===================================================================================
