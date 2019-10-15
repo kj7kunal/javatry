@@ -17,6 +17,7 @@ package org.docksidestage.javatry.colorbox;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
 import org.docksidestage.bizfw.colorbox.color.BoxColor;
@@ -217,6 +218,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 Object content = boxSpace.getContent();
                 if (content instanceof String && content.toString().startsWith("Water")){
                     found = true;
+                    break;
                 }
             }
             if(found) {
@@ -239,6 +241,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 Object content = boxSpace.getContent();
                 if (content instanceof String && content.toString().endsWith("front")){
                     found = true;
+                    break;
                 }
             }
             if(found) {
@@ -312,7 +315,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
      */
     public void test_substring_findLastChar() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
-        boolean found = false;
+
         for(ColorBox colorBox: colorBoxList) {
             for(BoxSpace boxSpace: colorBox.getSpaceList()) {
                 Object content = boxSpace.getContent();
@@ -332,7 +335,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
      */
     public void test_replace_remove_o() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
-        boolean found = false;
+
         for(ColorBox colorBox: colorBoxList) {
             for(BoxSpace boxSpace: colorBox.getSpaceList()) {
                 Object content = boxSpace.getContent();
@@ -350,7 +353,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
      */
     public void test_replace_fileseparator() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
-        boolean found = false;
+
         for(ColorBox colorBox: colorBoxList) {
             for(BoxSpace boxSpace: colorBox.getSpaceList()) {
                 Object content = boxSpace.getContent();
@@ -403,13 +406,54 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = value ; ... }" という形式で表示すると？)
      */
     public void test_showMap_flat() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        for(ColorBox colorBox: colorBoxList) {
+            for(BoxSpace boxSpace: colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content instanceof Map){
+                    String result = "map:{ ";
+                    Map<Object, Object> map = (Map)content;
+                    for (Object key : map.keySet()){
+                        result+= key.toString()+" = "+(map.get(key)).toString()+" ; ";
+                    }
+                    log(result+"}");
+                }
+            }
+        }
     }
+    
 
     /**
      * What string is converted to style "map:{ key = value ; key = map:{ key = value ; ... } ; ... }" from java.util.Map in color-boxes? <br>
      * (カラーボックスの中に入っている java.util.Map を "map:{ key = value ; key = map:{ key = value ; ... } ; ... }" という形式で表示すると？)
      */
     public void test_showMap_nested() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        for(ColorBox colorBox: colorBoxList) {
+            for(BoxSpace boxSpace: colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content instanceof Map){
+                    String result = "";
+                    log(mapString((Map)content,result));
+                }
+            }
+        }
+    }
+
+    public String mapString(Map map, String str){
+        str+="map:{ ";
+        for (Object key : map.keySet()){
+            Object value = map.get(key);
+            if (value instanceof Map){
+                str+= key.toString()+" = "+mapString((Map)value,str);
+
+            }
+            else{
+                str+= key.toString()+" = "+value.toString()+" ; ";
+            }
+        }
+        str+="} ; ";
+        return str;
     }
 
     // ===================================================================================
