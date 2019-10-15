@@ -16,6 +16,7 @@
 package org.docksidestage.javatry.colorbox;
 
 import java.io.File;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -421,7 +422,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             }
         }
     }
-    
+
 
     /**
      * What string is converted to style "map:{ key = value ; key = map:{ key = value ; ... } ; ... }" from java.util.Map in color-boxes? <br>
@@ -464,12 +465,50 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (whiteのカラーボックスのupperスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
      */
     public void test_parseMap_flat() {
+        BoxSpace upperWhiteSpace = new YourPrivateRoom().getColorBoxList().get(4).getSpaceList().get(0);
+//        log(upperWhiteSpace);
+
+        YourPrivateRoom.SecretBox secretBox = (YourPrivateRoom.SecretBox) upperWhiteSpace.getContent();
+        String mapping = secretBox.getText();
+        log(mapping);    //Got string from upperbox
+
+        Map<String, String> secretMap = new LinkedHashMap<>();
+        for(String map : mapping.split("[:|{|}|;]",-1)){
+            if(map.contains("=")) {
+                String[] mapkv = map.split("[\\ |=]+", -1);
+                secretMap.put(mapkv[1], mapkv[2]);
+            }
+        }
+        log(secretMap);
     }
 
+    // TODO: FINISH THIS
     /**
      * What string of toString() is converted from text of SecretBox class in both middle and lower spaces on the "white" color-box to java.util.Map? <br>
      * (whiteのカラーボックスのmiddleおよびlowerスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
      */
     public void test_parseMap_nested() {
+        BoxSpace middleWhiteSpace = new YourPrivateRoom().getColorBoxList().get(4).getSpaceList().get(1);
+        BoxSpace lowerWhiteSpace = new YourPrivateRoom().getColorBoxList().get(4).getSpaceList().get(2);
+
+        YourPrivateRoom.SecretBox msb = (YourPrivateRoom.SecretBox) middleWhiteSpace.getContent();
+        String msbmapping = msb.getText();
+        log(msbmapping);
+        log(parseStringMap(msbmapping));
+        YourPrivateRoom.SecretBox lsb = (YourPrivateRoom.SecretBox) lowerWhiteSpace.getContent();
+        String lsbmapping = lsb.getText();
+        log(lsbmapping);
+        log(parseStringMap(lsbmapping));
+
+
     }
+
+    public String[] parseStringMap(String mapping){
+        String[] parts = mapping.split("map:\\{ ",2);
+        return(parts);
+    }
+
+
+
 }
+
