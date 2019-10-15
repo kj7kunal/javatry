@@ -15,6 +15,7 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.io.File;
 import java.util.List;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
@@ -348,17 +349,17 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * カラーボックスに入ってる java.io.File のパス文字列のファイルセパレーターの "/" を、Windowsのファイルセパレーターに置き換えた文字列は？
      */
     public void test_replace_fileseparator() {
-//        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
-//        boolean found = false;
-//        for(ColorBox colorBox: colorBoxList) {
-//            for(BoxSpace boxSpace: colorBox.getSpaceList()) {
-//                Object content = boxSpace.getContent();
-//                if (content instanceof String && content.toString().contains("o")){
-//                    String replaced = content.toString().replace("o","");
-//                    log(content + " => " + replaced + " ==> characters =  " + replaced.length());
-//                }
-//            }
-//        }
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        boolean found = false;
+        for(ColorBox colorBox: colorBoxList) {
+            for(BoxSpace boxSpace: colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content instanceof java.io.File){
+                    String pathstring = ((File) content).getPath().replace("/","\\");
+                    log(content + " => (Windows) => " + pathstring);
+                }
+            }
+        }
     }
 
     // ===================================================================================
@@ -369,7 +370,30 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (カラーボックスの中に入っているDevilBoxクラスのtextの長さの合計は？)
      */
     public void test_welcomeToDevil() {
+        int result = 0;
+        String str = null;
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        for(ColorBox colorBox: colorBoxList) {
+            for(BoxSpace boxSpace: colorBox.getSpaceList()) {
+                Object content = boxSpace.getContent();
+                if (content instanceof YourPrivateRoom.DevilBox){
+                    YourPrivateRoom.DevilBox devilBox = (YourPrivateRoom.DevilBox) content;
+                    devilBox.wakeUp();
+                    devilBox.allowMe();
+                    devilBox.open();
+                    try {
+                        str = devilBox.getText();
+                    }
+                    catch (YourPrivateRoom.DevilBoxTextNotFoundException e){
+                        continue;
+                    }
+                    result+= str.length();
+                }
+            }
+        }
+        log(result);
     }
+
 
     // ===================================================================================
     //                                                                           Challenge
