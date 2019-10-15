@@ -18,6 +18,8 @@ package org.docksidestage.bizfw.basic.buyticket;
 /**
  * @author jflute
  */
+// TODO What is the difference between OneDayTicket, PluralDayTicket and Ticket? by zaya 2019/10/11
+// Is this Ticket OneDay or PluralDay? or both? or something totally different?
 public class Ticket {
 
     // ===================================================================================

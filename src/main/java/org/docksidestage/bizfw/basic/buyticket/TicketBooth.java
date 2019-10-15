@@ -45,6 +45,7 @@ public class TicketBooth {
     // ===================================================================================
     //                                                                          Buy Ticket
     //                                                                          ==========
+    // TODO refactor buyOneDayPassport and buyTwoDayPassport common code to another common method by zaya 2019/10/11
     public TicketBuyResult buyOneDayPassport(int handedMoney) {
         if (quantity <= 0) {
             throw new TicketSoldOutException("Sold out");
