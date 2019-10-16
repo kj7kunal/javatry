@@ -20,6 +20,7 @@ package org.docksidestage.javatry.basic.st6.os;
  */
 public abstract class St6OperationSystem {
 
+    // TODO delete unnecessary code by zaya 2019/10/16
 //    // ===================================================================================
 //    //                                                                          Definition
 //    //                                                                          ==========
