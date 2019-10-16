@@ -15,6 +15,15 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.security.cert.CollectionCertStoreParameters;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.docksidestage.bizfw.colorbox.ColorBox;
+import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
@@ -33,6 +42,16 @@ public class Step13NumberTest extends PlainTestCase {
      * (カラーボックの中に入っているInteger型で、0から54までの値は何個ある？)
      */
     public void test_countZeroToFiftyFour_IntegerOnly() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<Object> answer = colorBoxList.stream()
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .map(boxSpace -> boxSpace.getContent())
+                .filter(c -> c instanceof Integer || c instanceof Long || c instanceof BigInteger)
+                .map(c -> (Number)c)
+                .filter(x -> x.intValue()>=0 && x.intValue()<=54)
+                .collect(Collectors.toList());//count();
+
+        log("Total count of integers: "+answer.size()+" => "+answer);
     }
 
     /**
@@ -40,6 +59,16 @@ public class Step13NumberTest extends PlainTestCase {
      * (カラーボックの中に入っている数値で、0から54までの値は何個ある？)
      */
     public void test_countZeroToFiftyFour_Number() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<Object> answer = colorBoxList.stream()
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .map(boxSpace -> boxSpace.getContent())
+                .filter(c -> c instanceof Number)
+                .map(c -> (Number)c)
+                .filter(x -> x.doubleValue()>=0 && x.doubleValue()<=54)
+                .collect(Collectors.toList());//count();
+
+        log("Total count of numbers: "+answer.size()+" => "+answer);
     }
 
     /**
@@ -47,6 +76,13 @@ public class Step13NumberTest extends PlainTestCase {
      * (カラーボックスの中で、Integer型の Content を持っていてBoxSizeの幅が一番大きいカラーボックスの色は？)
      */
     public void test_findColorBigWidthHasInteger() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        String color = colorBoxList.stream()
+                .filter(colorBox -> colorBox.getSpaceList().stream().map(bS -> bS.getContent())
+                        .anyMatch(c -> c instanceof Integer || c instanceof Long || c instanceof BigInteger))
+                .reduce(colorBoxList.get(0), (s1, s2) -> s1.getSize().getWidth() > s2.getSize().getWidth() ? s1 : s2)
+                .getColor().getColorName();
+        log(color + ": colorbox has the biggest width and has integer content");
     }
 
     /**
@@ -54,6 +90,18 @@ public class Step13NumberTest extends PlainTestCase {
      * (カラーボックスの中に入ってる List の中の BigDecimal を全て足し合わせると？)
      */
     public void test_sumBigDecimalInList() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        BigDecimal answer = colorBoxList.stream()                           //open colorbox stream
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())      //flatmap colorbox and get spaces for each colorbox
+                .map(boxSpace -> boxSpace.getContent())                     //get content for each space
+                .filter(c -> c instanceof List)                             //filter content that have lists
+                .map(c -> (List<Object>)c)                                  //typecast into List<Object>
+                .flatMap(l -> l.stream())                                   //stream list
+                .filter(l -> l instanceof BigDecimal)                       //take only bigdecimals in each list
+                .map(l-> (BigDecimal)l)                                     //cast to BigDecimal.class
+                .reduce(BigDecimal.ZERO, (x,y)->(BigDecimal)x.add((BigDecimal)y));  //add all BigDecimals
+
+        log("Total sum of bigdecimal: "+answer);
     }
 
     // ===================================================================================
