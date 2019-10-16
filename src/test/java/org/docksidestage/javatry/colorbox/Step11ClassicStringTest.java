@@ -487,26 +487,26 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * What string of toString() is converted from text of SecretBox class in both middle and lower spaces on the "white" color-box to java.util.Map? <br>
      * (whiteのカラーボックスのmiddleおよびlowerスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
      */
-    public void test_parseMap_nested() {
-        BoxSpace middleWhiteSpace = new YourPrivateRoom().getColorBoxList().get(4).getSpaceList().get(1);
-        BoxSpace lowerWhiteSpace = new YourPrivateRoom().getColorBoxList().get(4).getSpaceList().get(2);
-
-        YourPrivateRoom.SecretBox msb = (YourPrivateRoom.SecretBox) middleWhiteSpace.getContent();
-        String msbmapping = msb.getText();
-        log(msbmapping);
-        log(parseStringMap(msbmapping));
-        YourPrivateRoom.SecretBox lsb = (YourPrivateRoom.SecretBox) lowerWhiteSpace.getContent();
-        String lsbmapping = lsb.getText();
-        log(lsbmapping);
-        log(parseStringMap(lsbmapping));
-
-
-    }
-
-    public String[] parseStringMap(String mapping){
-        String[] parts = mapping.split("map:\\{ ",2);
-        return(parts);
-    }
+//    public void test_parseMap_nested() {
+//        BoxSpace middleWhiteSpace = new YourPrivateRoom().getColorBoxList().get(4).getSpaceList().get(1);
+//        BoxSpace lowerWhiteSpace = new YourPrivateRoom().getColorBoxList().get(4).getSpaceList().get(2);
+//
+//        YourPrivateRoom.SecretBox msb = (YourPrivateRoom.SecretBox) middleWhiteSpace.getContent();
+//        String msbmapping = msb.getText();
+//        log(msbmapping);
+//        log(parseStringMap(msbmapping));
+//        YourPrivateRoom.SecretBox lsb = (YourPrivateRoom.SecretBox) lowerWhiteSpace.getContent();
+//        String lsbmapping = lsb.getText();
+//        log(lsbmapping);
+//        log(parseStringMap(lsbmapping));
+//
+//
+//    }
+//
+//    public String[] parseStringMap(String mapping){
+//        String[] parts = mapping.split("map:\\{ ",2);
+//        return(parts);
+//    }
 
 
 
