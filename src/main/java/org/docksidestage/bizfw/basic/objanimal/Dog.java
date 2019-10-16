@@ -29,6 +29,7 @@ public class Dog extends Animal implements FastRunner,Barker {
     // ===================================================================================
     //                                                                          Definition
     //                                                                          ==========
+    // TODO fix class by zaya 2019/10/16
     private static final Logger logger = LoggerFactory.getLogger(Cat.class);
 
     // ===================================================================================

@@ -22,6 +22,10 @@ import org.docksidestage.bizfw.basic.objanimal.loud.Loudable;
  * The object for animal(動物).
  * @author jflute
  */
+// TODO don't extend BarkingProcess, call it and use it in the class
+//  like private BarkingProcess barkingProcess, then we have to think about which method should be where?
+//  we want animals to bark, but we don't want to know how animals bark in the animal class,
+//  we want BarkingProcess to handle it by zaya 2019/10/16
 public abstract class Animal extends BarkProcess implements Loudable {
 
 

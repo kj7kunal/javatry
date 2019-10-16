@@ -97,6 +97,7 @@ public class Step07ExceptionTest extends PlainTestCase {
             log(new File(".").getCanonicalPath());
         }
         catch (IOException e) {
+            // TODO [comment] also you can just use log(e), it shows message and stack-trace
             log(e.getMessage());
             e.printStackTrace();
         }
@@ -185,6 +186,12 @@ public class Step07ExceptionTest extends PlainTestCase {
      */
     public void test_exception_translation_improveChallenge() {
         try {
+            // TODO Unavailable ScrewSpec:{\(^_^)/} is little hard to understand,
+            //  for example, let's say I'm a car shop,
+            //      Me: I want a nice car :D
+            //      Car salesman: Unavailable ScrewSpec:{\(^_^)/}
+            //      Me: ????
+            //  I want to be told like "we don't have a right car for you, because your requirement is "steering wheel is like sea"..." by zaya 2019/10/16
             new SupercarClient().buySupercar(); // you can fix the classes
             fail("always exception but none");
         } catch (RuntimeException e) {

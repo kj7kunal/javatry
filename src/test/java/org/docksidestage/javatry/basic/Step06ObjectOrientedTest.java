@@ -93,6 +93,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
         //
         // [final process]
         //
+        // TODO find and fix 1 more mistake by zaya 2019/10/16
         saveBuyingHistory(quantity, displayPrice, salesProceeds, alreadyIn);
     }
 
@@ -345,6 +346,8 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_writing_generalization_extractToAbstract() {
         // your confirmation code here
+        // TODO [comment] here we can do it like Absql mySql = new St6MySql()
+        //  and mySql.buildPagingQuery(), so I can see what superclass you have created by zaya 2019/10/16
         St6MySql mySql = new St6MySql();
         St6PostgreSql postgreSql = new St6PostgreSql();
         log(mySql.buildPagingQuery(5,3));
@@ -374,6 +377,7 @@ public class Step06ObjectOrientedTest extends PlainTestCase {
      */
     public void test_objectOriented_writing_withDelegation() {
         // your confirmation code here  // CHECK KAMACHI CODE
+        // TODO [comment] exactly as your comment, i have left some comments in the Animal class by zaya 2019/10/16
         Dog dog = new Dog();            // SHOULDNT BE DONE USING ABSTRACT CLASS
         log(dog.bark().getBarkWord());  // PROTECTED METHODS NEED TO BE KEPT IN THE SAME PACKAGE IF NEED BE USED
     }                                   // DECLARING BARKPROCESS IN PUBLIC SCOPE IS DANGEROUS BECAUSE ITS INTERNAL
