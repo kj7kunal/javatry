@@ -15,6 +15,17 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.docksidestage.bizfw.colorbox.ColorBox;
+import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
@@ -33,13 +44,39 @@ public class Step14DateTest extends PlainTestCase {
      * (カラーボックスに入っている日付をスラッシュ区切り (e.g. 2019/04/24) のフォーマットしたら？)
      */
     public void test_formatDate() {
-    }
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<String> dates = colorBoxList.stream()
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .map(boxSpace -> boxSpace.getContent())
+                .filter(c -> c instanceof LocalDate)
+                .map(c -> (LocalDate)c)
+                .map(x -> x.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")))
+                .collect(Collectors.toList());
 
+        dates.forEach(x->log(x));
+    }
     /**
      * What string of toString() is converted to LocalDate from slash-separated date string (e.g. 2019/04/24) in Set in yellow color-box? <br>
      * (yellowのカラーボックスに入っているSetの中のスラッシュ区切り (e.g. 2019/04/24) の日付文字列をLocalDateに変換してtoString()したら？)
      */
     public void test_parseDate() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        colorBoxList.stream()
+                .filter(colorBox -> colorBox.getColor().getColorName().equals("yellow"))
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .map(boxSpace -> boxSpace.getContent())
+                .filter(c -> c instanceof Set<?>)
+                .map(c -> (Set<?>) c)
+                .flatMap(c -> c.stream())
+                .filter(a -> a instanceof String)
+                .map(a -> ((String) a).toString())
+                .forEach(dates -> {
+                    try {
+                        log("Dates: " + LocalDate.parse(dates,DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+                    }
+                    catch(DateTimeParseException ignored){
+                    }
+                });
     }
 
     /**
@@ -47,6 +84,22 @@ public class Step14DateTest extends PlainTestCase {
      * (カラーボックスに入っている日付の月を全て足したら？)
      */
     public void test_sumMonth() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<Object> contents = colorBoxList.stream()
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .map(boxSpace -> boxSpace.getContent())
+                .collect(Collectors.toList());
+        int monthsum = 0;
+
+        monthsum += contents.stream().filter(c -> c instanceof LocalDate)
+                .map(c -> (LocalDate)c)
+                .mapToInt(c -> (int)c.getMonthValue())
+                .sum();
+        monthsum += contents.stream().filter(c -> c instanceof LocalDateTime)
+                .map(c -> (LocalDateTime)c)
+                .mapToInt(c -> (int)c.getMonthValue())
+                .sum();
+        log(monthsum);
     }
 
     /**
