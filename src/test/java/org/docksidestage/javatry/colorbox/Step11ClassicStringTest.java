@@ -132,6 +132,8 @@ public class Step11ClassicStringTest extends PlainTestCase {
      */
     public void test_length_findSecondMax() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        // TODO kunal Java variable name should be camel case e.g.: maxlen -> maxLen by ちーかま
+        // Please fix other parts
         int maxlen = 0, max2len = 0;
         String max2value = null, maxvalue = null;
         String str = null;
@@ -144,12 +146,20 @@ public class Step11ClassicStringTest extends PlainTestCase {
 
                 str = content.toString();
 
+                // TODO kunal please reformat by ちーかま
+                // NG:
+                // {
+                // else if
+                // OK:
+                // } else if
                 if (maxlen < str.length()){
                     max2value = maxvalue;
                     max2len = maxlen;
                     maxvalue = str;
                     maxlen = str.length();
                 }
+                // TODO kunal add space e.g.: max2len<str.length() -> max2len < str.length() by ちーかま
+                // Please fix other parts
                 else if (max2len<str.length() && str.length()!=maxlen){
                     max2value = str;
                     max2len = str.length();
@@ -213,6 +223,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
      */
     public void test_startsWith_findFirstWord() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        // Good kunal　It works even if there are multiple boxes with strings containing Water by ちーかま
         boolean found = false;
         for(ColorBox colorBox: colorBoxList) {
             for(BoxSpace boxSpace: colorBox.getSpaceList()) {
@@ -441,6 +452,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
         }
     }
 
+    // Well done! kunal
     public String mapString(Map map, String str){
         str+="map:{ ";
         for (Object key : map.keySet()){
