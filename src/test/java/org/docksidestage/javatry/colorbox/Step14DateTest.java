@@ -15,16 +15,20 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
+import org.docksidestage.bizfw.colorbox.space.DoorBoxSpace;
 import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
@@ -107,6 +111,17 @@ public class Step14DateTest extends PlainTestCase {
      * (カラーボックスに入っている二番目に見つかる日付に3日進めると何曜日？)
      */
     public void test_plusDays_weekOfDay() {
+        {
+            List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+            List<Object> contents = colorBoxList.stream()
+                    .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                    .map(boxSpace -> boxSpace.getContent())
+                    .collect(Collectors.toList());
+
+            contents.stream().filter(c -> c instanceof LocalDate || c instanceof LocalDateTime)
+                    .map(d -> (d instanceof LocalDate)?((LocalDate)d):((LocalDate)((LocalDateTime) d).toLocalDate()))
+                    .forEach(d -> log(d.plusDays(3).getDayOfWeek()));
+        }
     }
 
     // ===================================================================================
@@ -117,6 +132,22 @@ public class Step14DateTest extends PlainTestCase {
      * (yellowのカラーボックスに入っている二つの日付は何日離れている？)
      */
     public void test_diffDay() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<Object> yellowContent = colorBoxList.stream()
+                .filter(colorBox -> colorBox.getColor().getColorName().equals("yellow"))
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .map(boxSpace -> boxSpace.getContent())
+                .collect(Collectors.toList());
+//
+        List<Long> epochs = yellowContent.stream().filter(c -> c instanceof LocalDate || c instanceof LocalDateTime)
+                .map(d -> (d instanceof LocalDate)?((LocalDate)d):((LocalDate)((LocalDateTime) d).toLocalDate()))
+                .map(d -> d.toEpochDay()).sorted()
+                .collect(Collectors.toList());
+
+        for (int i=0; i<epochs.size()-1;i++) {
+            log(epochs.get(i+1)-epochs.get(i));
+        }
+
     }
 
     /**
@@ -128,6 +159,41 @@ public class Step14DateTest extends PlainTestCase {
      * redのカラーボックスに入っているLong型を日数として足して、カラーボックスに入っているリストの中のBigDecimalの整数値が3の小数点第一位の数を日数として引いた日付は？)
      */
     public void test_birthdate() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        List<Object> contents = colorBoxList.stream()
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .map(boxSpace -> boxSpace.getContent())
+                .collect(Collectors.toList());
+
+        LocalDate old = (LocalDate) contents.stream().filter(c -> c instanceof LocalDate).collect(Collectors.toList()).get(0);
+        log(old);
+
+        int addedmonth = (int) contents.stream().filter(c -> c instanceof LocalDateTime).map(d -> (LocalDateTime)d).mapToInt(d -> (int)d.getSecond()).sum();
+        old = old.plusMonths(addedmonth);
+        log(addedmonth,old);
+
+        int value = colorBoxList.stream()
+                .filter(colorBox -> colorBox.getColor().getColorName().equals("red"))
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .map(boxSpace -> boxSpace.getContent())
+                .filter(c -> c instanceof Long)
+                .mapToInt(c -> (int) ((Long) c).intValue())
+                .sum();
+        old = old.plusDays(value);
+        log(value,old);
+
+        int bdValue = contents.stream().filter(c -> c instanceof List)
+                .map(c -> (List<?>)c).flatMap(l -> l.stream())
+                .filter(l -> l instanceof BigDecimal)
+                .map(l-> (BigDecimal)l)
+                .filter(c -> c.intValue() == 3)
+                .mapToInt(c -> ((c.subtract(new BigDecimal(3))).multiply(new BigDecimal(10))).intValue())
+                .sum();
+
+        old = old.plusDays(bdValue);
+        log(bdValue,old);
+
+
     }
 
     /**
@@ -135,5 +201,17 @@ public class Step14DateTest extends PlainTestCase {
      * (カラーボックスに入っているLocalTimeの秒は？)
      */
     public void test_beReader() {
+        List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        colorBoxList.stream()
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .map(boxSpace -> {
+                    if(boxSpace instanceof DoorBoxSpace){
+                    ((DoorBoxSpace)boxSpace).openTheDoor();
+                    }
+                    return boxSpace.getContent();
+                })
+                .filter(c -> c instanceof LocalTime)
+                .map(c -> (LocalTime)c)
+                .forEach(c -> log(c.getSecond()));
     }
 }
