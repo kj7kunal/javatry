@@ -100,9 +100,6 @@ public class Step15MiscTypeTest extends PlainTestCase {
                 .filter(l -> l instanceof YourPrivateRoom.BoxedResort)
                 .map(l-> (YourPrivateRoom.BoxedResort)l)
                 .forEach(l -> log(l.getPark().flatMap(park->park.getStage()).map(stage->stage.getKeyword()).orElse("none")));
-
-
-
     }
 
     // ===================================================================================
@@ -113,5 +110,8 @@ public class Step15MiscTypeTest extends PlainTestCase {
      * (getColorBoxList()メソッドの中のmakeEighthColorBox()メソッドを呼び出している箇所の行数は？)
      */
     public void test_lineNumber() {
+        extractContent().stream().filter(c -> c instanceof YourPrivateRoom.BittersweetMemorableException)
+                .forEach(c -> log(((YourPrivateRoom.BittersweetMemorableException) c).getStackTrace()[1].getLineNumber()));
     }
+
 }

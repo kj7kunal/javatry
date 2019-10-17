@@ -151,10 +151,11 @@ public class Step14DateTest extends PlainTestCase {
     }
 
     /**
-     * What date is LocalDate in yellow color-box
-     * that is month-added with LocalDateTime's seconds in the same color-box,
-     * and is day-added with Long value in red color-box,
-     * and is day-added with the first decimal place of BigDecimal that has three (3) as integer in List in color-boxes? <br>
+     * Find LocalDate in yellow color-box,
+     * and add same color-box's LocalDateTime's seconds as number of months to it,
+     * and add red color-box's Long number as days to it(previous result),
+     * and subtract the first decimal place of BigDecimal that has three(3) as integer in list in color-boxes from it(previous result),
+     * What date is the result?<br>
      * (yellowのカラーボックスに入っているLocalDateに、同じカラーボックスに入っているLocalDateTimeの秒数を月数として足して、
      * redのカラーボックスに入っているLong型を日数として足して、カラーボックスに入っているリストの中のBigDecimalの整数値が3の小数点第一位の数を日数として引いた日付は？)
      */
@@ -190,7 +191,7 @@ public class Step14DateTest extends PlainTestCase {
                 .mapToInt(c -> ((c.subtract(new BigDecimal(3))).multiply(new BigDecimal(10))).intValue())
                 .sum();
 
-        old = old.plusDays(bdValue);
+        old = old.plusDays(-bdValue);
         log(bdValue,old);
 
 
