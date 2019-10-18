@@ -69,6 +69,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
         String maxstring = null;
         for(ColorBox colorBox: colorBoxList) {
             for(BoxSpace boxSpace: colorBox.getSpaceList()) {
+                // TODO what if there are no space in the color-boxes? by zaya 2019/10/18
                 Object content = boxSpace.getContent();
                 if (content instanceof String){
                     String str = (String) content;
@@ -79,6 +80,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 }
             }
         }
+        // TODO what if there are no strings in the color-boxes?　by zaya 2019/10/18
         log(maxstring + " (" + maxlen +")");
     }
 
@@ -107,6 +109,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
     //    }
     public void test_length_findMaxMinDiff() {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+        // TODO fix to max or maxLen(min too) by zaya  2019/10/18
         Integer maxlen = null;
         Integer minlen = null;
         for (ColorBox colorBox : colorBoxList) {
@@ -123,6 +126,8 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 }
             }
         }
+        // TODO what happens if there are no strings in color-boxes? by zaya 2019/10/18
+        // TODO only a number is difficult to understand when you have lots of logs, add some messages ;) by zaya 2019/10/18
         log(maxlen-minlen);
     }
 
@@ -136,6 +141,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
         // Please fix other parts
         int maxlen = 0, max2len = 0;
         String max2value = null, maxvalue = null;
+        // TODO initializing String with null is redundant by zaya 2019/10/18
         String str = null;
         for(ColorBox colorBox: colorBoxList) {
             for(BoxSpace boxSpace: colorBox.getSpaceList()) {
@@ -225,6 +231,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
         List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
         // Good kunal　It works even if there are multiple boxes with strings containing Water by ちーかま
         boolean found = false;
+        // TODO log that there is no "Water" found, in case thare are no Water found by zaya 2019/10/18
         for(ColorBox colorBox: colorBoxList) {
             for(BoxSpace boxSpace: colorBox.getSpaceList()) {
                 Object content = boxSpace.getContent();
@@ -294,6 +301,8 @@ public class Step11ClassicStringTest extends PlainTestCase {
         for(ColorBox colorBox: colorBoxList) {
             for(BoxSpace boxSpace: colorBox.getSpaceList()) {
                 Object content = boxSpace.getContent();
+                // TODO we want to filter string containing multiple "ど"s,
+                //  content.toString().contains("ど") is checking only one "ど" by zaya 2019/10/18
                 if (content instanceof String && content.toString().contains("ど")){
                     log("Last ど at : " + (1+content.toString().lastIndexOf("ど")));
                 }
@@ -315,6 +324,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
             for(BoxSpace boxSpace: colorBox.getSpaceList()) {
                 Object content = boxSpace.getContent();
                 if (content instanceof String && content.toString().endsWith("front")){
+                    // TODO [comment] perfect log :D by zaya 2019/10/18
                     log(content + " ends with front and starts with :" + content.toString().substring(0, 1));
                 }
             }
@@ -424,6 +434,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
                 Object content = boxSpace.getContent();
                 if (content instanceof Map){
                     String result = "map:{ ";
+                    // TODO unchecked assignment by zaya 2019/10/18
                     Map<Object, Object> map = (Map)content;
                     for (Object key : map.keySet()){
                         result+= key.toString()+" = "+(map.get(key)).toString()+" ; ";
@@ -477,6 +488,7 @@ public class Step11ClassicStringTest extends PlainTestCase {
      * (whiteのカラーボックスのupperスペースに入っているSecretBoxクラスのtextをMapに変換してtoString()すると？)
      */
     public void test_parseMap_flat() {
+        // TODO find colorbox and space by color name by zaya 2019/10/18
         BoxSpace upperWhiteSpace = new YourPrivateRoom().getColorBoxList().get(4).getSpaceList().get(0);
 //        log(upperWhiteSpace);
 
@@ -487,6 +499,9 @@ public class Step11ClassicStringTest extends PlainTestCase {
         Map<String, String> secretMap = new LinkedHashMap<>();
         for(String map : mapping.split("[:|{|}|;]",-1)){
             if(map.contains("=")) {
+                // TODO [comment] you can also do it like these
+                //  List<String> mapkv = Arrays.asList(map.split("[\\ |=]+", -1));
+                //  List<String> is generic, it has lot more useful methods by zaya 2019/10/18
                 String[] mapkv = map.split("[\\ |=]+", -1);
                 secretMap.put(mapkv[1], mapkv[2]);
             }
