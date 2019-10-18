@@ -15,6 +15,14 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import org.docksidestage.bizfw.colorbox.ColorBox;
+import org.docksidestage.bizfw.colorbox.space.DoorBoxSpace;
+import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
 
 /**
@@ -25,18 +33,67 @@ import org.docksidestage.unit.PlainTestCase;
  */
 public class Step19DevilTest extends PlainTestCase {
 
+    List<ColorBox> colorBoxList = new YourPrivateRoom().getColorBoxList();
+
+    public List<Object> extractContent(){
+        return colorBoxList.stream()
+                .flatMap(colorBox -> colorBox.getSpaceList().stream())
+                .map(boxSpace -> {
+                    if(boxSpace instanceof DoorBoxSpace){
+                        ((DoorBoxSpace)boxSpace).openTheDoor();
+                    }
+                    return boxSpace.getContent();
+                })
+                .collect(Collectors.toList());
+
+    }
+
     // ===================================================================================
     //                                                                        Devil Parade
     //                                                                        ============
     /**
-     * What is the content in low space of color-box
-     * of which lengths of the color is same as first place number of BigDecimal value first found in List in box spaces,
-     * that the second decimal place is same as tens place of depth of the color-box
-     * of which color name ends with third character of color-box that contains null as content? <br>
+     * Find a colorbox(lets call it A) that contains null,
+     * Next find a colorbox(B) that name ends with third character of colorbox A,
+     * Next find a colorbox(C) that the list in the space contains a number that 2nd decimal place is same as tens place of depth of color-box B,
+     * Next find a colorbox(D) that length of name is same as 1st place number of BigDecimal value found in the colorbox C,
+     * At last, the question is what is in the lowest space of colorbox D? <br>
      * (nullを含んでいるカラーボックスの色の名前の3文字目の文字で色の名前が終わっているカラーボックスの深さの十の位の数字が小数点第二桁目になっている
      * スペースの中のリストの中で最初に見つかるBigDecimalの一の位の数字と同じ色の長さのカラーボックスの一番下のスペースに入っているものは？)
      */
     public void test_too_long() {
+        char charThird = colorBoxList.stream()
+                .filter(cB -> cB.getSpaceList().stream().anyMatch(bS->bS.getContent() == null))
+                .map(c -> c.getColor().getColorName())
+                .collect(Collectors.toList()).get(0).charAt(2);
+        log(charThird);
+
+        int depth = colorBoxList.stream()
+                .filter(cB -> cB.getColor().getColorName().endsWith(String.valueOf(charThird)))
+                .map(cB -> cB.getSize().getDepth()).collect(Collectors.toList()).get(0)/10;
+        log(depth);
+
+        int len = colorBoxList.stream()
+                .flatMap(cB -> cB.getSpaceList().stream())
+                .map(bS->bS.getContent())
+                .filter(c -> c instanceof List)
+                .map(c -> (List<?>)c).flatMap(l -> l.stream())
+                .filter(l -> l instanceof BigDecimal)
+                .map(l-> (BigDecimal)l)
+                .filter(c -> {
+                    int i = String.valueOf(c.doubleValue()).indexOf('.');
+                    if (String.valueOf(c.doubleValue()).length()<=i+2){
+                        return false;
+                    }
+                    return Character.getNumericValue(String.valueOf(c.doubleValue()).charAt(i+2)) == depth;
+                })
+                .mapToInt(c -> Character.getNumericValue(String.valueOf(c.doubleValue()).charAt(0)))
+                .sum();
+        log(len);
+
+         log(colorBoxList.stream()
+                .filter(cB -> cB.getColor().getColorName().length() == len)
+                .map(cB -> cB.getSpaceList().get(2).getContent()).collect(Collectors.toList()));
+        
     }
 
     // ===================================================================================
