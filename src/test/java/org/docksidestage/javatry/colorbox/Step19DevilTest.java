@@ -15,12 +15,14 @@
  */
 package org.docksidestage.javatry.colorbox;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.docksidestage.bizfw.colorbox.ColorBox;
+import org.docksidestage.bizfw.colorbox.size.BoxSize;
 import org.docksidestage.bizfw.colorbox.space.DoorBoxSpace;
 import org.docksidestage.bizfw.colorbox.yours.YourPrivateRoom;
 import org.docksidestage.unit.PlainTestCase;
@@ -93,8 +95,11 @@ public class Step19DevilTest extends PlainTestCase {
          log(colorBoxList.stream()
                 .filter(cB -> cB.getColor().getColorName().length() == len)
                 .map(cB -> cB.getSpaceList().get(2).getContent()).collect(Collectors.toList()));
-        
+
     }
+
+
+
 
     // ===================================================================================
     //                                                                      Java Destroyer
@@ -104,6 +109,21 @@ public class Step19DevilTest extends PlainTestCase {
      * ((このテストメソッドの中だけで無理やり)赤いカラーボックスの高さを160に変更して、BoxSizeをtoString()すると？)
      */
     public void test_looks_like_easy() {
+        ColorBox redcolorbox = new YourPrivateRoom().getColorBoxList().stream()
+                .filter(box -> box.getColor().getColorName().equals("red"))
+                .collect(Collectors.toList()).get(0);
+        log(redcolorbox);
+
+        try {
+            Field height = redcolorbox.getSize().getClass().getDeclaredField("height");
+            height.setAccessible(true);
+            height.setInt(redcolorbox.getSize(), 160);
+        }
+        catch (NoSuchFieldException | IllegalAccessException e) {       //forcing
+            throw new IllegalStateException("Failed to handle field object of height: ", e);
+        }
+
+        log(redcolorbox);
     }
 
     // ===================================================================================
@@ -114,5 +134,8 @@ public class Step19DevilTest extends PlainTestCase {
      * (カラーボックスに入っているFunctionalInterfaceアノテーションが付与されているインターフェースのFunctionalメソッドの戻り値は？)
      */
     public void test_be_frameworker() {
+        extractContent().stream()
+                .filter(c -> c instanceof YourPrivateRoom.FavoriteProvider)
+                .forEach(c -> log(((YourPrivateRoom.FavoriteProvider) c).justHere()));
     }
 }
